@@ -1,0 +1,135 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+</head>
+<style>
+body{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 11px;
+  color: #202020;
+  letter-spacing: 1px;
+
+}
+
+h1{
+  font-size: 18pt;
+  margin-left: 10px;
+}
+
+span{
+  font-size: 16pt;
+}
+
+.container{
+  margin: 20px 10px 0px 10px;
+  padding-bottom: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  border-radius: 4px;
+}
+
+.cardHeader{
+  background: #D8D8D8;
+  text-transform: uppercase;
+  border-radius: 4px 4px;
+}
+
+.pad-text{
+  margin: 10px;
+}
+
+</style>
+
+<script>
+// Compass and orientation data
+if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', function(eventData) {
+        // gamma is the left-to-right tilt in degrees
+        document.getElementById("gamma").innerHTML = eventData.gamma;
+        // beta is the front-to-back tilt in degrees
+        document.getElementById("beta").innerHTML = eventData.beta;
+        // alpha is the compass direction the device is facing in degrees
+        document.getElementById("comp").innerHTML = eventData.alpha;
+    }, console.log("No orientation data found"));
+}
+
+// Accelerometer data
+if (window.DeviceMotionEvent == undefined) {
+        //No accelerometer is present. Use buttons.
+        console.log("no accelerometer");
+    }
+    else {
+        console.log("accelerometer found");
+        window.addEventListener("devicemotion", accelerometerUpdate, true);
+    }
+
+function accelerometerUpdate(e){
+  var aX = event.accelerationIncludingGravity.x*1;
+  var aY = event.accelerationIncludingGravity.y*1;
+  var aZ = event.accelerationIncludingGravity.z*1;
+  document.getElementById("xdiv").innerHTML = aX;
+  document.getElementById("ydiv").innerHTML = aX;
+  document.getElementById("zdiv").innerHTML = aX;
+  // console.log(aX + ", " + aY + ", " + aZ );
+}
+
+// geolocation data
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success);
+}
+
+function success(position) {
+    document.getElementById('lat').innerHTML = position.coords.latitude;
+    document.getElementById('long').innerHTML = position.coords.longitude;
+}
+</script>
+
+<body>
+  <!-- orientation -->
+  <div class="container">
+    <div class="cardHeader"><h1>Orientation data</h1></div>
+    <div id="compInner" class="pad-text">
+      <span>Front-to-back: </span>
+      <span id="gamma">gamma</span>
+    </div>
+    <div class="pad-text">
+      <span>Left-to-right: </span>
+      <span id="beta">beta</span>
+      </div>
+    <div class="pad-text">
+      <span>Compass: </span>
+      <span id="comp"> comp</span>
+    </div>
+  </div>
+  <!-- Accelerometer -->
+  <div class="container">
+    <div class="cardHeader"><h1>Accelerometer data</h1></div>
+    <div class="pad-text">
+      <span>X data: </span>
+      <span id="xdiv">x val</span>
+    </div>
+    <div class="pad-text">
+      <span>Y data: </span>
+      <span id="ydiv">y val</span>
+      </div>
+    <div class="pad-text">
+      <span>Z data: </span>
+      <span id="zdiv"> z val</span>
+    </div>
+  </div>
+  <!-- location -->
+  <div class="container">
+    <div class="cardHeader"><h1>Location data</h1></div>
+    <div class="pad-text">
+      <span>Latitude:</span>
+      <span id="lat">lat val</span>
+    </div>
+    <div class="pad-text">
+      <span>Latitude:</span>
+      <span id="long">lat val</span>
+    </div>
+</div>
+</body>
+</html>
